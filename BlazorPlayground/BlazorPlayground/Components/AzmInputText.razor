@@ -6,31 +6,33 @@
 @using System.Reflection;
 @using Microsoft.AspNetCore.Components.Forms;
 
-<div class="form-group">
-    <label for="@id.ToString()">@LabelText</label>
-    <input id="@id.ToString()" type="@Type" class="form-control @CssClass" @attributes="@AdditionalAttributes" @onfocus="@(()=>ShowError=true)" placeholder="@PlaceHolder" @bind="@CurrentValue">
-    @*<Description>*@
-    @if (!string.IsNullOrWhiteSpace(Description))
-    {
-        <small class="form-text text-muted">@Description</small>
-    }
-    @*</Description>*@
-
-    @*<Error>*@
-    @if (ShowError)
-    {
-        @foreach (var message in EditContext.GetValidationMessages(FieldIdentifier))
+    <div class="form-group">
+        @*<LabelAndInput>*@
+        <label for="@id.ToString()">@LabelText</label>
+        <input id="@id.ToString()" type="@Type" class="form-control @CssClass" @attributes="@AdditionalAttributes" @onfocus="@(()=>ShowError=true)" placeholder="@PlaceHolder" @bind="@CurrentValue">
+        @*<LabelAndInput>*@
+        @*<Description>*@
+        @if (!string.IsNullOrWhiteSpace(Description))
         {
-            <div class="validation-message">@message</div>
+            <small class="form-text text-muted">@Description</small>
         }
-    }
-    @if (CssClass.Contains("modified") && !EditContext.GetValidationMessages(FieldIdentifier).Any() && !string.IsNullOrEmpty(SuccessMessage))
-    {
-        <div class="valid-feedback">@string.Format(SuccessMessage, this.Value)</div>
-    }
-    @*</Error>*@
+        @*</Description>*@
 
-</div>
+        @*<Error>*@
+        @if (ShowError)
+        {
+            @foreach (var message in EditContext.GetValidationMessages(FieldIdentifier))
+            {
+                <div class="validation-message">@message</div>
+            }
+        }
+        @if (CssClass.Contains("modified") && !EditContext.GetValidationMessages(FieldIdentifier).Any() && !string.IsNullOrEmpty(SuccessMessage))
+        {
+            <div class="valid-feedback">@string.Format(SuccessMessage, this.Value)</div>
+        }
+        @*</Error>*@
+
+    </div>
 @code{
 Guid id = Guid.NewGuid();
 @*<Parameters>*@
