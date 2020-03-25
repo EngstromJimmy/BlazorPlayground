@@ -104,7 +104,8 @@ app {
 .navbar-toggler {
     background-color: rgba(255, 255, 255, 0.1);
 }
-
+/*
+//<RemoveCSS>
 .valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;
 }
@@ -112,7 +113,8 @@ app {
 .invalid {
     outline: 1px solid red;
 }
-
+//</RemoveCSS>
+*/
 .validation-message {
     color: red;
 }

@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Components\" />
+    <None Include="Components\AzmInputText.razor" />
   </ItemGroup>
 
 </Project>

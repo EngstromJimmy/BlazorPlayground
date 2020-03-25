@@ -1,0 +1,28 @@
+﻿@page "/AzmInputTextDemo"
+@using BlazorPlayground.Components
+
+@*<PasswordForm>*@
+<EditForm Model="Model" OnValidSubmit="Save">
+    <DataAnnotationsValidator />
+    <AzmInputText Type="Password" @bind-Value="@Model.OldPassword" />
+    <AzmInputText Type="Password" @bind-Value="@Model.Password" />
+    <AzmInputText Type="Password" @bind-Value="@Model.ConfirmPassword" SuccessMessage="Good job, you got them right!" />
+    <button type="submit" class="btn btn-success">Save</button>
+</EditForm>
+@*</PasswordForm>*@
+
+@code
+{
+    ChangePasswordViewModel Model = new ChangePasswordViewModel();
+
+    public async Task Save()
+    {
+        //Validate old password against current password
+        //Store new password
+    }    
+}
+
+
+
+
+
