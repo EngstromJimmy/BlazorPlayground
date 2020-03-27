@@ -10,7 +10,7 @@
         @*<LabelAndInput>*@
         <label for="@id.ToString()">@LabelText</label>
         <input id="@id.ToString()" type="@Type" class="form-control @CssClass" @attributes="@AdditionalAttributes" @onfocus="@(()=>ShowError=true)" placeholder="@PlaceHolder" @bind="@CurrentValue">
-        @*<LabelAndInput>*@
+        @*</LabelAndInput>*@
         @*<Description>*@
         @if (!string.IsNullOrWhiteSpace(Description))
         {
