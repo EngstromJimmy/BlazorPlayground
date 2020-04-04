@@ -1,53 +1,57 @@
 ﻿@*<Inherits>*@
 @inherits Microsoft.AspNetCore.Components.Forms.InputText
 @*</Inherits>*@
+@*<JavaScriptInterop>*@
+@inject IJSRuntime JSRuntime;
+@*</JavaScriptInterop>*@
 @using System.ComponentModel.DataAnnotations;
 @using System;
 @using System.Reflection;
 @using Microsoft.AspNetCore.Components.Forms;
 
-    <div class="form-group">
-        @*<LabelAndInput>*@
-        <label for="@id.ToString()">@LabelText</label>
-        <input id="@id.ToString()" type="@Type" class="form-control @CssClass" @attributes="@AdditionalAttributes" @onfocus="@(()=>ShowError=true)" placeholder="@PlaceHolder" @bind="@CurrentValue">
-        @*</LabelAndInput>*@
-        @*<Description>*@
-        @if (!string.IsNullOrWhiteSpace(Description))
-        {
-            <small class="form-text text-muted">@Description</small>
-        }
-        @*</Description>*@
+<div class="form-group">
+    @*<LabelAndInput>*@
+    <label for="@id.ToString()">@LabelText</label>
+    <input id="@id.ToString()" type="@Type" class="form-control @CssClass" @attributes="@AdditionalAttributes" @onfocus="@(()=>ShowError=true)" placeholder="@PlaceHolder" @bind="@CurrentValue">
+    @*</LabelAndInput>*@
 
-        @*<Error>*@
-        @if (ShowError)
-        {
-            @foreach (var message in EditContext.GetValidationMessages(FieldIdentifier))
-            {
-                <div class="validation-message">@message</div>
-            }
-        }
-        @if (CssClass.Contains("modified") && !EditContext.GetValidationMessages(FieldIdentifier).Any() && !string.IsNullOrEmpty(SuccessMessage))
-        {
-            <div class="valid-feedback">@string.Format(SuccessMessage, this.Value)</div>
-        }
-        @*</Error>*@
-
-    </div>
-@code{
-Guid id = Guid.NewGuid();
-@*<Parameters>*@
-[Parameter] public bool ShowError { get; set; } = false;
-[Parameter] public string LabelText { get; set; } = "";
-[Parameter] public string PlaceHolder { get; set; } = "";
-[Parameter] public string Description { get; set; } = "";
-[Parameter] public string SuccessMessage { get; set; } = "";
-[Parameter] public string Type { get; set; } = "text";
- @*</Parameters>*@
-
-protected override Task OnParametersSetAsync()
-{
-    try
+    @*<Description>*@
+    @if (!string.IsNullOrWhiteSpace(Description))
     {
+        <small class="form-text text-muted">@Description</small>
+    }
+    @*</Description>*@
+
+    @*<Error>*@
+    @if (ShowError)
+    {
+        @foreach (var message in EditContext.GetValidationMessages(FieldIdentifier))
+        {
+            <div class="validation-message">@message</div>
+        }
+    }
+    @if (CssClass.Contains("modified") && !EditContext.GetValidationMessages(FieldIdentifier).Any() && !string.IsNullOrEmpty(SuccessMessage))
+    {
+        <div class="valid-feedback">@string.Format(SuccessMessage, this.Value)</div>
+    }
+    @*</Error>*@
+
+</div>
+@code{
+    Guid id = Guid.NewGuid();
+    @*<Parameters>*@
+    [Parameter] public bool ShowError { get; set; } = false;
+    [Parameter] public string LabelText { get; set; } = "";
+    [Parameter] public string PlaceHolder { get; set; } = "";
+    [Parameter] public string Description { get; set; } = "";
+    [Parameter] public string SuccessMessage { get; set; } = "";
+    [Parameter] public string Type { get; set; } = "text";
+    @*</Parameters>*@
+
+    protected override Task OnParametersSetAsync()
+    {
+        try
+        {
             @*<Reflection>*@
             var displayattribute = this.FieldIdentifier.Model.GetType()
             .GetProperty(this.FieldIdentifier.FieldName)
@@ -71,9 +75,25 @@ protected override Task OnParametersSetAsync()
                 }
             }
             @*</Reflection>*@
-    }
-    catch { }
+        }
+        catch { }
 
-    return base.OnParametersSetAsync();
-}
+        return base.OnParametersSetAsync();
+    }
+
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        @*<Autofocus>*@
+        @if (AdditionalAttributes != null && AdditionalAttributes.ContainsKey("autofocus"))
+        {
+            if (AdditionalAttributes["autofocus"].ToString() == "True")
+            {
+                JSRuntime.InvokeVoidAsync("SetFocus", id.ToString());
+            }
+        }
+        @*</Autofocus>*@
+
+        return base.OnAfterRenderAsync(firstRender);
+    }
 }
