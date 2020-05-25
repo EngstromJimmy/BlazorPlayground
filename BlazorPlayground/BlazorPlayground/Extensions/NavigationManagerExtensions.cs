@@ -7,7 +7,7 @@ namespace Microsoft.AspNetCore.Components
     {
         public static async Task NavigateToNewWindowAsync(this NavigationManager navigator, IJSRuntime jsRuntime, string url, string content)
         {
-            await jsRuntime.InvokeAsync<object>("OpenInNewWindow", url, content);
+            await jsRuntime.InvokeAsync<object>("NavigationManagerExtensions.openInNewWindow", url, content);
         }
     }
 }

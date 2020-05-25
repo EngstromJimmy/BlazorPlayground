@@ -1,0 +1,14 @@
+﻿@page "/DownloadFile"
+@inject IJSRuntime jsruntime;
+
+
+    <button class="btn btn-primary" @onclick="DownloadTheFile">Download file</button>
+
+
+
+@code{
+    protected async void DownloadTheFile()
+    {
+        await jsruntime.SaveAs("Monkey.txt", new byte[] { 0x74, 0x65, 0x73, 0x74 });
+    }
+}
