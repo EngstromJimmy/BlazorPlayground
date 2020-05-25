@@ -1,0 +1,12 @@
+﻿@page "/openinnewwindow"
+@inject NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
+
+<button class="btn btn-primary" @onclick="OpenLink">Open link in new window</button>
+
+@code {
+    private async Task OpenLink()
+    {
+        await navigationManager.NavigateToNewWindowAsync(jsRuntime, "http://www.blazor.net", "Redirecting to Blazor.net");
+    }
+}

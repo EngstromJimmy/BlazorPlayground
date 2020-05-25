@@ -85,13 +85,16 @@
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
         @*<Autofocus>*@
-        @if (AdditionalAttributes != null && AdditionalAttributes.ContainsKey("autofocus"))
+        if (firstRender)
         {
-            if (AdditionalAttributes["autofocus"].ToString() == "True")
-            {
-                JSRuntime.InvokeVoidAsync("SetFocus", id.ToString());
+            @if (AdditionalAttributes != null && AdditionalAttributes.ContainsKey("autofocus"))
+                {
+                    if (AdditionalAttributes["autofocus"].ToString() == "True")
+                    {
+                        JSRuntime.InvokeVoidAsync("SetFocus", id.ToString());
+                    }
+                }
             }
-        }
         @*</Autofocus>*@
 
         return base.OnAfterRenderAsync(firstRender);
