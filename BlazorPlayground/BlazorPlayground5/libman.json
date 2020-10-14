@@ -1,0 +1,13 @@
+{
+  "version": "1.0",
+  "defaultProvider": "filesystem",
+  "libraries": [
+    {
+      "library": "Pages",
+      "files": [
+        "*.js"
+      ],
+      "destination": "wwwroot/"
+    }
+  ]
+}

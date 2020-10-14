@@ -1,0 +1,22 @@
+﻿@page "/IsolatedJS"
+@*<IJSRuntime>*@
+@inject IJSRuntime jsRuntime
+@*</IJSRuntime>*@
+
+@*<Button>*@
+<button @onclick="@(async ()=> { message= await jsmodule.InvokeAsync<string>("showPrompt", "What is your message?");})">Click me!</button>
+@*</Button>*@
+
+@*<Code>*@
+@message
+
+@code{
+    JSObjectReference jsmodule;
+    string message = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        jsmodule = await jsRuntime.InvokeAsync<JSObjectReference>("import", "./IsolatedJS.razor.js");
+    }
+}
+@*</Code>*@
